@@ -1,10 +1,12 @@
+name: bunker-crm
+
 services:
-  rh-crm-workspace:
+  bunker-crm-workspace:
     build:
       context: ..
       dockerfile: .devcontainer/Dockerfile
     volumes:
-      # Montaje bind con flag :Z requerida para SELinux
+      # Montaje bind con flag :Z requerida para SELinux en Fedora/Bluefin
       - ..:/workspaces:Z
     # Mapeo de UID 1000 del host para Podman rootless (evita permisos root)
     userns_mode: "keep-id"
@@ -13,12 +15,12 @@ services:
     command: /bin/sh -c "while sleep 1000; do :; done"
 
     ports:
-      - "5173:5173" # Puerto estándar del servidor de desarrollo de Vite
-      - "8000:8000" # Puerto estándar de FastAPI
+      - "5173:5173" # Vite dev server
+      - "8000:8000" # FastAPI
 
     networks:
-      - rh-crm-net
+      - bunker-crm-net
 
 networks:
-  rh-crm-net:
+  bunker-crm-net:
     driver: bridge

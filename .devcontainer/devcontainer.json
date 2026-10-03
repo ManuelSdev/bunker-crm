@@ -1,7 +1,7 @@
 {
-    "name": "rh-crm-workspace",
+    "name": "bunker-crm-workspace",
     "dockerComposeFile": "docker-compose.yml",
-    "service": "rh-crm-workspace",
+    "service": "bunker-crm-workspace",
     "workspaceFolder": "/workspaces",
     "overrideCommand": false,
     "customizations": {
@@ -19,8 +19,8 @@
             ]
         }
     },
-    // Instala dependencias automáticamente al arrancar por primera vez
-    "postCreateCommand": "cd /workspaces/apps/web && pnpm install && cd /workspaces/apps/api && uv sync",
+    // Se ejecuta una sola vez al construir el contenedor
+    "postCreateCommand": "pnpm install",
     "remoteUser": "vscode",
     "containerUser": "vscode",
     "updateRemoteUserUID": false
