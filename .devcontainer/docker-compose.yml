@@ -1,0 +1,24 @@
+services:
+  rh-crm-workspace:
+    build:
+      context: ..
+      dockerfile: .devcontainer/Dockerfile
+    volumes:
+      # Montaje bind con flag :Z requerida para SELinux
+      - ..:/workspaces:Z
+    # Mapeo de UID 1000 del host para Podman rootless (evita permisos root)
+    userns_mode: "keep-id"
+    tty: true
+    # Mantiene el contenedor despierto consumiendo 0% de CPU
+    command: /bin/sh -c "while sleep 1000; do :; done"
+
+    ports:
+      - "5173:5173" # Puerto estándar del servidor de desarrollo de Vite
+      - "8000:8000" # Puerto estándar de FastAPI
+
+    networks:
+      - rh-crm-net
+
+networks:
+  rh-crm-net:
+    driver: bridge

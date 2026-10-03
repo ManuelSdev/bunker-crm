@@ -1,0 +1,27 @@
+{
+    "name": "rh-crm-workspace",
+    "dockerComposeFile": "docker-compose.yml",
+    "service": "rh-crm-workspace",
+    "workspaceFolder": "/workspaces",
+    "overrideCommand": false,
+    "customizations": {
+        "vscode": {
+            "settings": {
+                "python.defaultInterpreterPath": "/usr/local/bin/python",
+                "python.terminal.activateEnvironment": true
+            },
+            "extensions": [
+                "rooveterinaryinc.roo-cline",
+                "dbaeumer.vscode-eslint",
+                "esbenp.prettier-vscode",
+                "ms-python.python",
+                "ms-python.vscode-pylance"
+            ]
+        }
+    },
+    // Instala dependencias automáticamente al arrancar por primera vez
+    "postCreateCommand": "cd /workspaces/apps/web && pnpm install && cd /workspaces/apps/api && uv sync",
+    "remoteUser": "vscode",
+    "containerUser": "vscode",
+    "updateRemoteUserUID": false
+}
