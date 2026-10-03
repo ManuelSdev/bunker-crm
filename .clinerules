@@ -1,0 +1,18 @@
+# Constitución Técnica - Búnker Suite
+
+### 1. Fronteras de Arquitectura y Monorepo
+
+- Todo componente visual vive exclusivamente en `packages/ui`.
+- Las aplicaciones en `apps/*` NUNCA importan directamente de `@mui/material` ni `@emotion/*`; todo se consume exportado desde `@bunker/ui`.
+- Prohibido instalar librerías externas en npm/pnpm sin la aprobación explícita del usuario.
+
+### 2. Contratos y TypeScript Estricto
+
+- Prohibido terminantemente el uso de `any`.
+- Toda prop de componente debe contar con su `interface` TypeScript explícita, descriptiva y exportada.
+- Los componentes deben ser agnósticos al negocio: cero textos de CRM o rutas fijas hardcodeadas (todo entra por props).
+
+### 3. Protocolo Operativo y Calidad (DoD)
+
+- El modo Architect NUNCA escribe código ejecutable (`.ts`, `.tsx`); solo genera especificaciones, esquemas y checklists en Markdown.
+- El modo Code no da una tarea por finalizada sin ejecutar y verificar con éxito `pnpm --filter @bunker/ui run build`.

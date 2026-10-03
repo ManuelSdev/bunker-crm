@@ -1,27 +1,48 @@
 {
-    "name": "bunker-crm-workspace",
-    "dockerComposeFile": "docker-compose.yml",
-    "service": "bunker-crm-workspace",
-    "workspaceFolder": "/workspaces",
-    "overrideCommand": false,
-    "customizations": {
-        "vscode": {
-            "settings": {
-                "python.defaultInterpreterPath": "/usr/local/bin/python",
-                "python.terminal.activateEnvironment": true
-            },
-            "extensions": [
-                "rooveterinaryinc.roo-cline",
-                "dbaeumer.vscode-eslint",
-                "esbenp.prettier-vscode",
-                "ms-python.python",
-                "ms-python.vscode-pylance"
-            ]
+  "name": "bunker-crm-workspace",
+  "dockerComposeFile": "docker-compose.yml",
+  "service": "bunker-crm-workspace",
+  "workspaceFolder": "/workspaces",
+  "overrideCommand": false,
+  "customizations": {
+    "vscode": {
+      "settings": {
+        "python.defaultInterpreterPath": "/usr/local/bin/python",
+        "python.terminal.activateEnvironment": true,
+        // --- FORMATEO AUTOMÁTICO AL GUARDAR ---
+        "editor.formatOnSave": true,
+        "editor.defaultFormatter": "esbenp.prettier-vscode",
+        "[typescript]": {
+          "editor.defaultFormatter": "esbenp.prettier-vscode"
+        },
+        "[typescriptreact]": {
+          "editor.defaultFormatter": "esbenp.prettier-vscode"
+        },
+        "workbench.colorCustomizations": {
+          // Turquesa Eléctrico: Identificador visual de "Entorno de Datos Activo"
+          "activityBar.foreground": "#4ee2ec",
+          // Borde lateral: Mantiene la simetría visual en paneles ultra-wide
+          "activityBar.border": "#4ee2ec",
+          // Iconos inactivos: Aplicamos el 40% de opacidad (hex 66) para mantener el foco en lo activo
+          "activityBar.inactiveForeground": "#4ee2ec66",
+          // EXTRA SENIOR: Barra de estado a juego para una inmersión total
+          "statusBar.background": "#4ee2ec",
+          "statusBar.foreground": "#282a36",
+          "statusBarItem.hoverBackground": "#30bcc5"
         }
-    },
-    // Se ejecuta una sola vez al construir el contenedor
-    "postCreateCommand": "pnpm install",
-    "remoteUser": "vscode",
-    "containerUser": "vscode",
-    "updateRemoteUserUID": false
+      },
+      "extensions": [
+        "rooveterinaryinc.roo-cline",
+        "dbaeumer.vscode-eslint",
+        "esbenp.prettier-vscode",
+        "ms-python.python",
+        "ms-python.vscode-pylance"
+      ]
+    }
+  },
+  // Se ejecuta una sola vez al construir el contenedor
+  "postCreateCommand": "pnpm install",
+  "remoteUser": "vscode",
+  "containerUser": "vscode",
+  "updateRemoteUserUID": false
 }
