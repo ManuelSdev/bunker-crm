@@ -41,7 +41,13 @@
     }
   },
   // Se ejecuta una sola vez al construir el contenedor
-  "postCreateCommand": "pnpm install",
+  // 1. sudo apt-get update: Refresca el índice de paquetes Debian/Ubuntu del contenedor.
+  // 2. sudo apt-get install -y ripgrep: Instala el binario `rg` del sistema sin pausas interactivas (-y).
+  //    Es dependencia obligatoria para que el proceso Node de Roo Code indexe el workspace y no aborte en 0%.
+  // 3. &&: Operador lógico de Bash que encadena secuencialmente; solo si la instalación de ripgrep
+  //    termina con código de salida 0 (éxito), procede inmediatamente a ejecutar pnpm install.
+  // 4. pnpm install: Enlaza los workspaces del monorepo y descarga las dependencias declaradas.
+  "postCreateCommand": "sudo apt-get update && sudo apt-get install -y ripgrep && pnpm install",
   "remoteUser": "vscode",
   "containerUser": "vscode",
   "updateRemoteUserUID": false

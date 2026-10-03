@@ -18,11 +18,11 @@ bunker-crm/
 │ └── components/ # StatCard, DataTable, FormTextField
 │
 └── apps/ # APLICACIONES DE NEGOCIO
-├── club-crm/ # El CRM de Nadeth
+├── wmw-crm/ # El CRM de Tom
 │ ├── web/ (Consume @bunker/ui)
 │ └── api/ (FastAPI: OCR de documentos y socios)
 │
-└── rh-crm/ # El CRM de tu primo
+└── rh-crm/ # El CRM de Pedrito
 ├── web/ (Consume @bunker/ui)
 └── api/ (FastAPI: Holded, leads, finanzas)
 El protocolo limpio para arrancar de cero

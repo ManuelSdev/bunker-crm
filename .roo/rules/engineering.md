@@ -16,3 +16,7 @@
 
 - El modo Architect NUNCA escribe código ejecutable (`.ts`, `.tsx`); solo genera especificaciones, esquemas y checklists en Markdown.
 - El modo Code no da una tarea por finalizada sin ejecutar y verificar con éxito `pnpm --filter @bunker/ui run build`.
+
+### 4. Reglas de Poda y Suplantación Estricta:
+
+- Prohibido importar o referenciar `@mui/x-data-grid` o `@mui/x-data-grid-pro`.Utiliza exclusivamente @mui/material puro
