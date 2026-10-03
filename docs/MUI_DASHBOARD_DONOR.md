@@ -76,66 +76,93 @@ export default function Dashboard(props: { disableCustomTheme?: boolean }) {
 ## 2. SideMenu.tsx
 
 ```tsx
-import type {} from "@mui/x-date-pickers/themeAugmentation";
-import type {} from "@mui/x-charts/themeAugmentation";
-import type {} from "@mui/x-data-grid-pro/themeAugmentation";
-import type {} from "@mui/x-tree-view/themeAugmentation";
-import { alpha } from "@mui/material/styles";
-import CssBaseline from "@mui/material/CssBaseline";
+import { styled } from "@mui/material/styles";
+import Avatar from "@mui/material/Avatar";
+import MuiDrawer, { drawerClasses } from "@mui/material/Drawer";
 import Box from "@mui/material/Box";
+import Divider from "@mui/material/Divider";
 import Stack from "@mui/material/Stack";
-import AppNavbar from "./components/AppNavbar";
-import Header from "./components/Header";
-import MainGrid from "./components/MainGrid";
-import SideMenu from "./components/SideMenu";
-import AppTheme from "../shared-theme/AppTheme";
-import {
-  chartsCustomizations,
-  dataGridCustomizations,
-  datePickersCustomizations,
-  treeViewCustomizations,
-} from "./theme/customizations";
+import Typography from "@mui/material/Typography";
+import SelectContent from "./SelectContent";
+import MenuContent from "./MenuContent";
+import CardAlert from "./CardAlert";
+import OptionsMenu from "./OptionsMenu";
 
-const xThemeComponents = {
-  ...chartsCustomizations,
-  ...dataGridCustomizations,
-  ...datePickersCustomizations,
-  ...treeViewCustomizations,
-};
+const drawerWidth = 240;
 
-export default function Dashboard(props: { disableCustomTheme?: boolean }) {
+const Drawer = styled(MuiDrawer)({
+  width: drawerWidth,
+  flexShrink: 0,
+  boxSizing: "border-box",
+  mt: 10,
+  [`& .${drawerClasses.paper}`]: {
+    width: drawerWidth,
+    boxSizing: "border-box",
+  },
+});
+
+export default function SideMenu() {
   return (
-    <AppTheme {...props} themeComponents={xThemeComponents}>
-      <CssBaseline enableColorScheme />
-      <Box sx={{ display: "flex" }}>
-        <SideMenu />
-        <AppNavbar />
-        {/* Main content */}
-        <Box
-          component="main"
-          sx={(theme) => ({
-            flexGrow: 1,
-            backgroundColor: theme.vars
-              ? `rgba(${theme.vars.palette.background.defaultChannel} / 1)`
-              : alpha(theme.palette.background.default, 1),
-            overflow: "auto",
-          })}
-        >
-          <Stack
-            spacing={2}
-            sx={{
-              alignItems: "center",
-              mx: 3,
-              pb: 5,
-              mt: { xs: 8, md: 0 },
-            }}
-          >
-            <Header />
-            <MainGrid />
-          </Stack>
-        </Box>
+    <Drawer
+      variant="permanent"
+      sx={{
+        display: { xs: "none", md: "block" },
+        [`& .${drawerClasses.paper}`]: {
+          backgroundColor: "background.paper",
+        },
+      }}
+    >
+      <Box
+        sx={{
+          display: "flex",
+          mt: "calc(var(--template-frame-height, 0px) + 4px)",
+          p: 1.5,
+        }}
+      >
+        <SelectContent />
       </Box>
-    </AppTheme>
+      <Divider />
+      <Box
+        sx={{
+          overflow: "auto",
+          height: "100%",
+          display: "flex",
+          flexDirection: "column",
+        }}
+      >
+        <MenuContent />
+        <CardAlert />
+      </Box>
+      <Stack
+        direction="row"
+        sx={{
+          p: 2,
+          gap: 1,
+          alignItems: "center",
+          borderTop: "1px solid",
+          borderColor: "divider",
+        }}
+      >
+        <Avatar
+          sizes="small"
+          alt="Riley Carter"
+          src="/static/images/avatar/7.jpg"
+          sx={{ width: 36, height: 36 }}
+        />
+        <Box sx={{ mr: "auto" }}>
+          <Typography
+            variant="body2"
+            sx={{ fontWeight: 500, lineHeight: "16px" }}
+          >
+            Riley Carter
+          </Typography>
+          <Typography variant="caption" sx={{ color: "text.secondary" }}>
+            riley@email.com
+          </Typography>
+        </Box>
+        <OptionsMenu />
+      </Stack>
+    </Drawer>
   );
 }
 ```
