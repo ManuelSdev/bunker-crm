@@ -1,0 +1,44 @@
+# ==============================================================================
+# DEPENDENCIAS Y ENTORNOS (Nunca se comitean, se reconstruyen)
+# ==============================================================================
+# Node & pnpm: al ponerlo sin barra delante, ignora cualquier node_modules a cualquier nivel
+node_modules/
+.pnpm-store/
+
+# Python & uv: entornos virtuales y cachés de bytecode
+.venv/
+__pycache__/
+*.py[cod]
+*$py.class
+.uv/
+
+# ==============================================================================
+# ARTEFACTOS DE COMPILACIÓN (Código generado)
+# ==============================================================================
+# Salidas de Vite y del compilador de TypeScript
+dist/
+build/
+*.tsbuildinfo
+
+# ==============================================================================
+# SECRETOS Y VARIABLES DE ENTORNO
+# ==============================================================================
+# Ignora archivos con credenciales reales, pero permite versionar plantillas de ejemplo
+.env
+.env.local
+.env.*.local
+!.env.example
+
+# ==============================================================================
+# LOGS Y CACHÉS
+# ==============================================================================
+*.log
+npm-debug.log*
+pnpm-debug.log*
+.eslintcache
+
+# ==============================================================================
+# SISTEMA OPERATIVO Y HERRAMIENTAS
+# ==============================================================================
+.DS_Store
+Thumbs.db
