@@ -49,7 +49,7 @@
   // 4. pnpm install: Enlaza los workspaces del monorepo y descarga las dependencias declaradas.
   "postCreateCommand": "sudo apt-get update && sudo apt-get install -y ripgrep && pnpm install",
   // Se dispara automáticamente cada vez que VS Code se conecta al contenedor
-  "postAttachCommand": "mkdir -p ~/.vscode-server/bin/*/node_modules/@vscode/ripgrep/bin && ln -sf /usr/bin/rg ~/.vscode-server/bin/*/node_modules/@vscode/ripgrep/bin/rg 2>/dev/null || true",
+  "postAttachCommand": "sudo sh -c 'for d in /home/vscode/.vscode-server/bin/*; do if [ -d \"$d\" ]; then mkdir -p \"$d/node_modules/@vscode/ripgrep/bin\" && ln -sf /usr/bin/rg \"$d/node_modules/@vscode/ripgrep/bin/rg\"; fi; done'",
   "remoteUser": "vscode",
   "containerUser": "vscode",
   "updateRemoteUserUID": false
