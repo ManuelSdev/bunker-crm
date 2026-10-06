@@ -12,19 +12,19 @@ El monorepo está orquestado mediante **pnpm workspaces** para aislar el cascar�
 
 ```text
 bunker-crm/
-├── .devcontainer/              # Entorno de desarrollo estandarizado en contenedores[cite: 2]
-├── docs/                       # Documentación viva, donante de UI y ADRs técnicos[cite: 2, 4]
+├── .devcontainer/              # Entorno de desarrollo estandarizado en contenedores[cite: 4]
+├── docs/                       # Documentación viva, donante de UI y ADRs técnicos[cite: 4]
 ├── packages/
-│   └── ui/                     # Librería visual interna (@bunker/ui) basada en Material UI[cite: 2, 4]
+│   └── ui/                     # Librería visual interna (@bunker/ui) basada en Material UI[cite: 4]
 ├── apps/
-│   ├── wmw-crm/                # CRM para gestión de socios y cuotas de club[cite: 2, 4]
-│   │   ├── web/                # SPA React 19 que consume @bunker/ui[cite: 2, 4]
-│   │   └── api/                # Backend FastAPI (hexagonal, OCR de documentos)[cite: 2, 4]
-│   └── rh-crm/                 # CRM comercial con sincronización contable en Holded[cite: 2, 4]
-│       ├── web/                # SPA React 19 que consume @bunker/ui[cite: 2, 4]
-│       └── api/                # Backend FastAPI (hexagonal, pipeline, Holded SDK)[cite: 2, 4]
-├── pnpm-workspace.yaml         # Configuración del espacio de trabajo pnpm[cite: 2, 4]
-└── package.json                # Scripts globales de compilación y orquestación[cite: 2, 4]
+│   ├── wmw-crm/                # CRM para gestión de socios y cuotas de club[cite: 4]
+│   │   ├── web/                # SPA React 19 que consume @bunker/ui[cite: 4]
+│   │   └── api/                # Backend FastAPI (hexagonal, OCR de documentos)[cite: 4]
+│   └── rh-crm/                 # CRM comercial con sincronización contable en Holded[cite: 4]
+│       ├── web/                # SPA React 19 que consume @bunker/ui[cite: 4]
+│       └── api/                # Backend FastAPI (hexagonal, pipeline, Holded SDK)[cite: 4]
+├── pnpm-workspace.yaml         # Configuración del espacio de trabajo pnpm[cite: 4]
+└── package.json                # Scripts globales de compilación y orquestación[cite: 4]
 
 ```
 
@@ -40,7 +40,7 @@ bunker-crm/
 
 - **Regla Inviolable:** 100% libre de lógica de dominio (no conoce conceptos de "socio", "lead" o "factura"); todo el contenido se parametriza vía contratos e interfaces estrictas de TypeScript.
 
-### 2. `WMW CRM` (`apps/wmw-crm`)
+### 2. WMW CRM (`apps/wmw-crm`)
 
 - **Propósito:** Gestión ágil de membresías y socios de club (aprox. 200 socios).
 
@@ -51,7 +51,7 @@ bunker-crm/
 
 - Procesamiento documental mediante visión artificial / OCR para auto-rellenado de fichas bajo cumplimiento estricto de GDPR y políticas _Zero Data Retention_ (ZDR).
 
-### 3. `RH CRM` (`apps/rh-crm`)
+### 3. RH CRM (`apps/rh-crm`)
 
 - **Propósito:** Gestión comercial, prospección y seguimiento del ciclo de vida de clientes.
 
@@ -88,7 +88,7 @@ bunker-crm/
 
 ---
 
-## 🏛️️ Arquitectura del Sistema: Patrón Hexagonal Unificado
+## 🏛 Arquitectura del Sistema: Patrón Hexagonal Unificado
 
 Tanto el Frontend como el Backend implementan el **Patrón Hexagonal (Puertos y Adaptadores)** para aislar las reglas de negocio de la infraestructura volátil.
 
@@ -150,7 +150,9 @@ Tanto el Frontend como el Backend implementan el **Patrón Hexagonal (Puertos y 
 ### Requisitos Previos
 
 - Node.js (>= 20.x)
+
 - pnpm (>= 9.x)
+
 - Python (>= 3.11)
 
 ### Instalación de dependencias
@@ -179,15 +181,3 @@ pnpm --filter @rh-crm/web run dev
 ```
 
 ---
-
-## 📋 Directrices de Desarrollo (Ground Truth para Desarrolladores e IA)
-
-1. **Aislamiento visual absoluto:** Las aplicaciones en `apps/*` tienen estrictamente prohibido importar directamente de `@mui/material` o dependencias de Emotion; todo componente visual debe provenir exportado desde `@bunker/ui`.
-
-2. **Tipado inviolable (Zod & Pydantic SSOT):** Prohibido el uso de `any` o _type casting_ permisivo (`as unknown`). En frontend, todo tipo se infiere de esquemas Zod (`z.infer<...>`); en backend, se valida mediante esquemas estrictos de Pydantic.
-
-3. **Independencia del Dominio (Hexágono):** El código dentro de `core/` o `domain/` (tanto en web como en api) no puede importar librerías de infraestructura (ni React, ni FastAPI, ni SQLAlchemy, ni clientes HTTP). Cambiar de base de datos o de proveedor de IA solo requiere modificar adaptadores secundarios sin tocar las rutas ni las reglas de dominio.
-
-4. **Almacenamiento de archivos:** Bajo ninguna circunstancia se guardan imágenes o PDFs como BLOBs en PostgreSQL; se suben a buckets de objetos y se almacena únicamente la URL resultante.
-
-5. **Decisiones Técnicas:** Cualquier alteración en la arquitectura o en las entidades debe documentarse en los ADRs dentro del directorio `docs/`.
